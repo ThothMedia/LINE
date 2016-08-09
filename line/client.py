@@ -179,6 +179,7 @@ class LineClient(LineAPI):
         """
         try:
             contact = self._findAndAddContactsByUserid(userid)
+            print contact
         except TalkException as e:
             self.raise_error(e.reason)
 
@@ -189,7 +190,7 @@ class LineClient(LineAPI):
                 self.raise_error("%s already exists" % contact.displayName)
                 return 
 
-        c = LineContact(self, contact.values()[0])
+        c = LineContact(self, contact)
         self.contacts.append(c)
 
         self.contacts.sort()

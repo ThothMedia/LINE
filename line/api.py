@@ -37,6 +37,7 @@ class LineAPI(object):
 
     LINE_HTTP_URL          = LINE_DOMAIN + "/api/v4/TalkService.do"
     LINE_HTTP_IN_URL       = LINE_DOMAIN + "/P4"
+    LINE_HTTP_OUT_URL      = LINE_DOMAIN + "/S4"
     LINE_CERTIFICATE_URL   = LINE_DOMAIN + "/Q"
     LINE_SESSION_LINE_URL  = LINE_DOMAIN + "/authct/v1/keys/line"
     LINE_SESSION_NAVER_URL = LINE_DOMAIN + "/authct/v1/keys/naver"
@@ -60,7 +61,7 @@ class LineAPI(object):
         After login, make `client` and `client_in` instance
         to communicate with LINE server
         """
-        raise Exception("Code is removed because of the request of LINE corporation")
+        # raise Exception("Code is removed because of the request of LINE corporation")
 
     def updateAuthToken(self):
         """
@@ -77,10 +78,20 @@ class LineAPI(object):
 
     def tokenLogin(self):
         self.transport = THttpClient.THttpClient(self.LINE_HTTP_URL)
+        self.transport_in = THttpClient.THttpClient(self.LINE_HTTP_IN_URL)
+        self.transport_out = THttpClient.THttpClient(self.LINE_HTTP_OUT_URL)
+
         self.transport.setCustomHeaders(self._headers)
+        self.transport_in.setCustomHeaders(self._headers)
+        self.transport_out.setCustomHeaders(self._headers)
 
         self.protocol = TCompactProtocol.TCompactProtocol(self.transport)
+        self.protocol_in = TCompactProtocol.TCompactProtocol(self.transport_in)
+        self.protocol_out = TCompactProtocol.TCompactProtocol(self.transport_out)
+
         self._client  = CurveThrift.Client(self.protocol)
+        self._client_in  = CurveThrift.Client(self.protocol_in)
+        self._client_out  = CurveThrift.Client(self.protocol_out)
         
     def login(self):
         """Login to LINE server."""
@@ -99,10 +110,20 @@ class LineAPI(object):
         crypto        = rsa.encrypt(message, pub_key).encode('hex')
 
         self.transport = THttpClient.THttpClient(self.LINE_HTTP_URL)
+        self.transport_in = THttpClient.THttpClient(self.LINE_HTTP_IN_URL)
+        self.transport_out = THttpClient.THttpClient(self.LINE_HTTP_OUT_URL)
+
         self.transport.setCustomHeaders(self._headers)
+        self.transport_in.setCustomHeaders(self._headers)
+        self.transport_out.setCustomHeaders(self._headers)
 
         self.protocol = TCompactProtocol.TCompactProtocol(self.transport)
-        self._client   = CurveThrift.Client(self.protocol)
+        self.protocol_in = TCompactProtocol.TCompactProtocol(self.transport_in)
+        self.protocol_out = TCompactProtocol.TCompactProtocol(self.transport_out)
+
+        self._client  = CurveThrift.Client(self.protocol)
+        self._client_in  = CurveThrift.Client(self.protocol_in)
+        self._client_out  = CurveThrift.Client(self.protocol_out)
 
         try:
             with open(self.CERT_FILE,'r') as f:
@@ -305,7 +326,7 @@ class LineAPI(object):
 
         :param message: `message` instance
         """
-        return self._client.sendMessage(seq, message)
+        return self._client_out.sendMessage(seq, message)
 
     def _getLastOpRevision(self):
         return self._client.getLastOpRevision()
