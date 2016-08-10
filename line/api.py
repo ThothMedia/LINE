@@ -349,7 +349,7 @@ class LineAPI(object):
 
     def raise_error(self, msg):
         """Error format"""
-        raise Exception("Error: %s" % msg)
+        raise msg
 
     def _get_json(self, url):
         """Get josn from given url with saved session and headers"""
