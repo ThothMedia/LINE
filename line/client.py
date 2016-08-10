@@ -53,7 +53,7 @@ class LineClient(LineAPI):
 
         if not (authToken or id and password):
             msg = "id and password or authToken is needed"
-            self.raise_error(msg)
+            return mg)
 
         if is_mac:
             os_version = "10.9.4-MAVERICKS-x64"
@@ -181,13 +181,13 @@ class LineClient(LineAPI):
             contact = self._findAndAddContactsByUserid(userid)
             print contact
         except TalkException as e:
-            self.raise_error(e)
+            return e
 
         contact = contact.values()[0]
 
         for c in self.contacts:
             if c.id == contact.mid:
-                self.raise_error("%s already exists" % contact.displayName)
+                return "s already exists" % contact.displayName)
                 return 
 
         c = LineContact(self, contact)
@@ -205,13 +205,13 @@ class LineClient(LineAPI):
         try:
             contact = self._findAndAddContactsByPhone(phone)
         except TalkException as e:
-            self.raise_error(e)
+            return e
 
         contact = contact.values()[0]
 
         for c in self.contacts:
             if c.id == contact.mid:
-                self.raise_error("%s already exists" % contact.displayName)
+                return "s already exists" % contact.displayName)
                 return 
 
         c = LineContact(self, contact.values()[0])
@@ -229,13 +229,13 @@ class LineClient(LineAPI):
         try:
             contact = self._findAndAddContactsByEmail(email)
         except TalkException as e:
-            self.raise_error(e)
+            return e
 
         contact = contact.values()[0]
 
         for c in self.contacts:
             if c.id == contact.mid:
-                self.raise_error("%s already exists" % contact.displayName)
+                return "s already exists" % contact.displayName)
                 return 
 
         c = LineContact(self, contact.values()[0])
@@ -253,7 +253,7 @@ class LineClient(LineAPI):
         try:
             contact = self._findContactByUserid(userid)
         except TalkException as e:
-            self.raise_error(e)
+            return e
 
         return LineContact(self, contact)
 
@@ -291,7 +291,7 @@ class LineClient(LineAPI):
 
             return group
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return None
 
@@ -312,7 +312,7 @@ class LineClient(LineAPI):
 
             return group
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return None
 
@@ -358,7 +358,7 @@ class LineClient(LineAPI):
                 self._acceptGroupInvitation(group.id)
                 return True
             except Exception as e:
-                self.raise_error(e)
+                return e
                 return False
 
     @check_auth
@@ -373,7 +373,7 @@ class LineClient(LineAPI):
 
             return True
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return False
 
@@ -386,7 +386,7 @@ class LineClient(LineAPI):
 
             return room
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return None
 
@@ -403,7 +403,7 @@ class LineClient(LineAPI):
 
             return room
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return None
 
@@ -440,7 +440,7 @@ class LineClient(LineAPI):
 
             return True
         except Exception as e:
-            self.raise_error(e)
+            return e
 
             return False
 
@@ -457,7 +457,7 @@ class LineClient(LineAPI):
             try:
                 return self._sendMessage(message, seq)
             except Exception as e:
-                self.raise_error(e)
+                return e
 
                 return False
 
@@ -508,7 +508,7 @@ class LineClient(LineAPI):
             return
         except TalkException as e:
             if e.code == 9:
-                self.raise_error("user logged in to another machine")
+                return "ser logged in to another machine")
             else:
                 return
 
@@ -593,5 +593,5 @@ class LineClient(LineAPI):
             return True
         else:
             msg = "you need to login"
-            self.raise_error(msg)
+            return mg)
 

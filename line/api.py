@@ -74,7 +74,7 @@ class LineAPI(object):
 
             return True
         else:
-            self.raise_error("You need to login first. There is no valid certificate")
+            return "You need to login first. There is no valid certificate"
 
     def tokenLogin(self):
         self.transport = THttpClient.THttpClient(self.LINE_HTTP_URL)
@@ -141,7 +141,7 @@ class LineAPI(object):
             self.authToken = self._headers['X-Line-Access'] = msg.authToken
         elif msg.type == 2:
             msg = "require QR code"
-            self.raise_error(msg)
+            return msg
         elif msg.type == 3:
             self._headers['X-Line-Access'] = msg.verifier
             self._pinCode = msg.pinCode
@@ -165,7 +165,7 @@ class LineAPI(object):
                     return False
             else:
                 msg = "Require device confirm"
-                self.raise_error(msg)
+                return msg
 
             #raise Exception("Code is removed because of the request of LINE corporation")
         else:
@@ -229,7 +229,7 @@ class LineAPI(object):
         """
         if type(ids) != list:
             msg = "argument should be list of contact ids"
-            self.raise_error(msg)
+            return msg
 
         return self._client.getContacts(ids)
 
@@ -285,7 +285,7 @@ class LineAPI(object):
         """Get a list of group with ids"""
         if type(ids) != list:
             msg = "argument should be list of group ids"
-            self.raise_error(msg)
+            return msg
 
         return self._client.getGroups(ids)
 
@@ -345,7 +345,7 @@ class LineAPI(object):
             return self._client.getMessageBoxCompactWrapUpList(start, count)
         except Exception as e:
             msg = e
-            self.raise_error(msg)
+            return msg
 
     def raise_error(self, msg):
         """Error format"""
