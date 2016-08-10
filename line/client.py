@@ -181,7 +181,7 @@ class LineClient(LineAPI):
             contact = self._findAndAddContactsByUserid(userid)
             print contact
         except TalkException as e:
-            self.raise_error(e.reason)
+            self.raise_error(e)
 
         contact = contact.values()[0]
 
@@ -205,7 +205,7 @@ class LineClient(LineAPI):
         try:
             contact = self._findAndAddContactsByPhone(phone)
         except TalkException as e:
-            self.raise_error(e.reason)
+            self.raise_error(e)
 
         contact = contact.values()[0]
 
@@ -229,7 +229,7 @@ class LineClient(LineAPI):
         try:
             contact = self._findAndAddContactsByEmail(email)
         except TalkException as e:
-            self.raise_error(e.reason)
+            self.raise_error(e)
 
         contact = contact.values()[0]
 
@@ -253,7 +253,7 @@ class LineClient(LineAPI):
         try:
             contact = self._findContactByUserid(userid)
         except TalkException as e:
-            self.raise_error(e.reason)
+            self.raise_error(e)
 
         return LineContact(self, contact)
 
