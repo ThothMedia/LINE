@@ -53,7 +53,7 @@ class LineClient(LineAPI):
 
         if not (authToken or id and password):
             msg = "id and password or authToken is needed"
-            return mg)
+            return msg
 
         if is_mac:
             os_version = "10.9.4-MAVERICKS-x64"
@@ -187,7 +187,7 @@ class LineClient(LineAPI):
 
         for c in self.contacts:
             if c.id == contact.mid:
-                return "s already exists" % contact.displayName)
+                return "%s already exists" % contact.displayName
                 return 
 
         c = LineContact(self, contact)
@@ -211,7 +211,7 @@ class LineClient(LineAPI):
 
         for c in self.contacts:
             if c.id == contact.mid:
-                return "s already exists" % contact.displayName)
+                return "%s already exists" % contact.displayName
                 return 
 
         c = LineContact(self, contact.values()[0])
@@ -235,7 +235,7 @@ class LineClient(LineAPI):
 
         for c in self.contacts:
             if c.id == contact.mid:
-                return "s already exists" % contact.displayName)
+                return "%s already exists" % contact.displayName
                 return 
 
         c = LineContact(self, contact.values()[0])
@@ -508,7 +508,7 @@ class LineClient(LineAPI):
             return
         except TalkException as e:
             if e.code == 9:
-                return "ser logged in to another machine")
+                return "user logged in to another machine"
             else:
                 return
 
@@ -593,5 +593,5 @@ class LineClient(LineAPI):
             return True
         else:
             msg = "you need to login"
-            return mg)
+            return msg
 
