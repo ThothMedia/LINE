@@ -245,7 +245,7 @@ class LineClient(LineAPI):
         return c
 
     @check_auth
-    def _findContactByUserid(self, userid):
+    def findContactByUserid(self, userid):
         """Find a `contact` by userid
 
         :param userid: user id
